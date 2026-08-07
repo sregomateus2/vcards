@@ -5,93 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adicionar Contato - Gian Franco Barbosa</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f4f4f9;
-      color: #333;
-      text-align: center;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      max-width: 320px;
-      width: 100%;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
+    .card { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 320px; width: 100%; }
     h2 { margin: 0 0 5px 0; font-size: 20px; }
     p { margin: 0 0 20px 0; color: #666; font-size: 14px; }
-    .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 14px 0;
-      background-color: #007bff;
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      box-sizing: border-box;
-    }
+    .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; box-sizing: border-box; }
   </style>
 </head>
 <body>
   <div class="card">
     <h2>Gian Franco Barbosa</h2>
     <p>NL Transportes Multimodal</p>
-    <button type="button" id="btnContato" class="btn" onclick="abrirContato()">Adicionar aos Contatos</button>
+    <a href="gian.vcf" class="btn" id="btn">Adicionar aos Contatos</a>
   </div>
 
   <script>
-    const isAndroid = /Android/i.test(navigator.userAgent);
-
-    function abrirContato() {
-      if (isAndroid) {
-        // Formato de Intent nativo limpo para a API do Google Contacts no Android
-        const intentURI = "intent:#Intent;" +
-          "action=android.intent.action.INSERT;" +
-          "type=vnd.android.cursor.dir/contact;" +
-          "S.name=Gian%20Franco%20Barbosa;" +
-          "S.phone=%2B5591981569301;" +
-          "S.email=gianfb%40nlmultimodal.com.br;" +
-          "S.company=NL%20Transportes%20Multimodal;" +
-          "S.title=Presidente;" +
-          "end";
-        
-        window.location.href = intentURI;
-      } else {
-        // Mantém a estrutura vCard via Data URI que funciona direto no iOS
-        const vcardData = "data:text/vcard;charset=utf-8," + encodeURIComponent(
-          "BEGIN:VCARD\n" +
-          "VERSION:3.0\n" +
-          "N:Barbosa;Gian;Franco;;\n" +
-          "FN:Gian Franco Barbosa\n" +
-          "ORG:NL Transportes Multimodal\n" +
-          "TITLE:Presidente\n" +
-          "TEL;TYPE=CELL:+5591981569301\n" +
-          "EMAIL:gianfb@nlmultimodal.com.br\n" +
-          "ADR:;;Rod. Arthur Bernardes, 5885\n" +
-          "URL:nlmultimodal.com.br\n" +
-          "END:VCARD"
-        );
-        window.location.href = vcardData;
-      }
-    }
-
-    // No iOS abre direto ao carregar a página
+    // Dispara o download/abertura do vcf automaticamente ao carregar a página
     window.onload = function() {
-      if (!isAndroid) {
-        abrirContato();
-      }
+      window.location.href = "gian.vcf";
     };
   </script>
 </body>
