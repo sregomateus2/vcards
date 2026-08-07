@@ -5,91 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adicionar Contato - Gian Franco Barbosa</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f4f4f9;
-      color: #333;
-      text-align: center;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      max-width: 320px;
-      width: 100%;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
+    .card { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 320px; width: 100%; }
     h2 { margin: 0 0 5px 0; font-size: 20px; }
     p { margin: 0 0 20px 0; color: #666; font-size: 14px; }
-    .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 14px 0;
-      background-color: #007bff;
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      box-sizing: border-box;
-    }
+    .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; box-sizing: border-box; }
   </style>
 </head>
 <body>
   <div class="card">
     <h2>Gian Franco Barbosa</h2>
     <p>NL Transportes Multimodal</p>
-    <button onclick="salvarContato()" class="btn">Adicionar aos Contatos</button>
+    <!-- O link abaixo é configurado dinamicamente pelo JavaScript -->
+    <a href="#" id="vcardLink" class="btn">Adicionar aos Contatos</a>
   </div>
 
   <script>
     const isAndroid = /Android/i.test(navigator.userAgent);
+    const vcardLink = document.getElementById('vcardLink');
 
-    function salvarContato() {
-      if (isAndroid) {
-        // Dispara uma Intent nativa do Android para abrir a tela de Inserção da Agenda
-        const intentUrl = "intent:#Intent;" +
-          "action=android.intent.action.INSERT;" +
-          "type=vnd.android.cursor.dir/contact;" +
-          "S.name=Gian%20Franco%20Barbosa;" +
-          "S.company=NL%20Transportes%20Multimodal;" +
-          "S.title=Presidente;" +
-          "S.phone=%2B5591981569301;" +
-          "S.email=gianfb%40nlmultimodal.com.br;" +
-          "S.notes=Rod.%20Arthur%20Bernardes%2C%205885%20-%20nlmultimodal.com.br;" +
-          "end";
-        window.location.href = intentUrl;
-      } else {
-        // No iOS joga o vCard direto para a tela nativa
-        const vcardData = "data:text/vcard;charset=utf-8," + encodeURIComponent(
-          "BEGIN:VCARD\n" +
-          "VERSION:3.0\n" +
-          "N:Barbosa;Gian;Franco;;\n" +
-          "FN:Gian Franco Barbosa\n" +
-          "ORG:NL Transportes Multimodal\n" +
-          "TITLE:Presidente\n" +
-          "TEL;TYPE=CELL:+5591981569301\n" +
-          "EMAIL:gianfb@nlmultimodal.com.br\n" +
-          "ADR:;;Rod. Arthur Bernardes, 5885\n" +
-          "URL:nlmultimodal.com.br\n" +
-          "END:VCARD"
-        );
-        window.location.href = vcardData;
-      }
+    // Dados do vCard para iOS
+    const vcardDataIos = "data:text/vcard;charset=utf-8," + encodeURIComponent(
+      "BEGIN:VCARD\n" +
+      "VERSION:3.0\n" +
+      "N:Barbosa;Gian;Franco;;\n" +
+      "FN:Gian Franco Barbosa\n" +
+      "ORG:NL Transportes Multimodal\n" +
+      "TITLE:Presidente\n" +
+      "TEL;TYPE=CELL:+5591981569301\n" +
+      "EMAIL:gianfb@nlmultimodal.com.br\n" +
+      "ADR:;;Rod. Arthur Bernardes, 5885\n" +
+      "URL:nlmultimodal.com.br\n" +
+      "END:VCARD"
+    );
+
+    // Intent simplificada para Android (Abre a tela de inserção com o nome pré-preenchido)
+    const intentDataAndroid = "intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/contact;S.name=Gian%20Franco%20Barbosa;S.phone=%2B5591981569301;S.email=gianfb%40nlmultimodal.com.br;end";
+
+    if (isAndroid) {
+      // No Android, configuramos o link diretamente. O usuário PRECISA clicar.
+      vcardLink.href = intentDataAndroid;
+    } else {
+      // No iOS, mantemos a lógica que funcionou (automático + link manual)
+      vcardLink.href = vcardDataIos;
+      
+      // Tenta abrir automaticamente no iOS
+      window.onload = function() {
+        window.location.href = vcardDataIos;
+      };
     }
-
-    window.onload = function() {
-      salvarContato();
-    };
   </script>
 </body>
 </html>
