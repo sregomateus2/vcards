@@ -10,7 +10,21 @@ ADR:;;Rod. Arthur Bernardes, 5885
 URL:nlmultimodal.com.br
 END:VCARD`;
 
-  res.setHeader('Content-Type', 'text/vcard; charset=utf-8');
-  res.setHeader('Content-Disposition', 'inline; filename="GianBarbosa.vcf"');
-  res.status(200).send(vcard);
+  const base64Vcard = Buffer.from(vcard).toString('base64');
+  const dataUri = `data:text/vcard;base64,${base64Vcard}`;
+
+  const html = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0;url=${dataUri}">
+  </head>
+  <body>
+    <script>
+      window.location.href = "${dataUri}";
+    </script>
+  </body>
+</html>`;
+
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.status(200).send(html);
 }
