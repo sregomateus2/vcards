@@ -16,13 +16,12 @@
   <div class="card">
     <h2>Gian Franco Barbosa</h2>
     <p>NL Transportes Multimodal</p>
-    <a href="gian.vcf" class="btn" id="btn">Adicionar aos Contatos</a>
+    <a href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3ABarbosa%3BGian%3BFranco%3B%3B%0AFN%3AGian%20Franco%20Barbosa%0AORG%3ANL%20Transportes%20Multimodal%0ATITLE%3APresidente%0ATEL%3BTYPE%3DCELL%3A%2B5591981569301%0AEMAIL%3Agianfb%40nlmultimodal.com.br%0AADR%3A%3B%3BRod.%20Arthur%20Bernardes%2C%205885%0AURL%3Anlmultimodal.com.br%0AEND%3AVCARD" download="GianBarbosa.vcf" class="btn" id="vbtn">Adicionar aos Contatos</a>
   </div>
 
   <script>
-    // Dispara o download/abertura do vcf automaticamente ao carregar a página
     window.onload = function() {
-      window.location.href = "gian.vcf";
+      document.getElementById('vbtn').click();
     };
   </script>
 </body>
