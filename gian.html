@@ -6,13 +6,28 @@
   <title>Adicionar Contato - Gian Franco Barbosa</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
-    .card { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 320px; width: 100%; box-sizing: border-box; }
     
-    /* Estilo da Logo */
-    .logo { max-width: 150px; height: auto; margin-bottom: 20px; }
+    .card { 
+      background: white; 
+      padding: 30px; 
+      border-radius: 16px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+      max-width: 320px; 
+      width: 100%; 
+      box-sizing: border-box; 
+      position: relative; /* Necessário para alinhar a logo no canto */
+    }
+    
+    /* Logo posicionada no canto superior esquerdo */
+    .logo { 
+      max-width: 80px; 
+      height: auto; 
+      display: block;
+      margin-bottom: 15px;
+    }
 
-    h2 { margin: 0 0 5px 0; font-size: 20px; }
-    p { margin: 0 0 20px 0; color: #666; font-size: 14px; }
+    h2 { margin: 0 0 5px 0; font-size: 20px; text-align: left; }
+    p { margin: 0 0 20px 0; color: #666; font-size: 14px; text-align: left; }
     
     /* Botão em Vermelho */
     .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #e53935; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; box-sizing: border-box; border: none; cursor: pointer; transition: background-color 0.2s; }
@@ -21,11 +36,12 @@
 </head>
 <body>
   <div class="card">
-    <!-- Esta tag abaixo insere a logo que você subiu para o GitHub -->
+    <!-- Logo no canto superior esquerdo -->
     <img src="logo_nl.png" alt="Logo NL Transporte Multimodal" class="logo">
 
     <h2>Gian Franco Barbosa</h2>
-    <p>NL Transportes Multimodal</p>
+    <!-- Texto atualizado no singular -->
+    <p>NL Transporte Multimodal</p>
     <button class="btn" id="vbtn">Adicionar aos Contatos</button>
   </div>
 
@@ -34,7 +50,7 @@
 VERSION:3.0
 N:Barbosa;Gian;Franco;;
 FN:Gian Franco Barbosa
-ORG:NL Transportes Multimodal
+ORG:NL Transporte Multimodal
 TITLE:Presidente
 TEL;TYPE=CELL:+5591981569301
 EMAIL:gianfb@nlmultimodal.com.br
