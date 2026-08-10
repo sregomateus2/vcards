@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adicionar Contato - Gian</title>
+  <title>Adicionar Contato - Gian Franco Barbosa</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
     
@@ -37,7 +37,7 @@
   <div class="card">
     <img src="logo_nl.png" alt="Logo NL Transporte Multimodal" class="logo">
 
-    <h2>Gian</h2>
+    <h2>Gian Franco Barbosa</h2>
     <p>NL Transporte Multimodal</p>
     <button class="btn" id="vbtn">Adicionar aos Contatos</button>
   </div>
@@ -45,8 +45,8 @@
   <script>
     const vcard = `BEGIN:VCARD
 VERSION:3.0
-N:;Gian;;;
-FN:Gian
+N:Barbosa;Gian;Franco;;
+FN:Gian Franco Barbosa
 ORG:NL Transporte Multimodal
 TEL;TYPE=CELL:+5591993536846
 EMAIL;TYPE=WORK:gian@nlmultimodal.com.br
@@ -56,7 +56,7 @@ END:VCARD`;
 
     async function addContact() {
       const blob = new Blob([vcard], { type: 'text/vcard' });
-      const file = new File([blob], 'Gian.vcf', { type: 'text/vcard' });
+      const file = new File([blob], 'GianFrancoBarbosa.vcf', { type: 'text/vcard' });
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
@@ -72,7 +72,7 @@ END:VCARD`;
 
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = 'Gian.vcf';
+      link.download = 'GianFrancoBarbosa.vcf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
