@@ -15,19 +15,18 @@
       max-width: 320px; 
       width: 100%; 
       box-sizing: border-box; 
-      position: relative; /* Necessário para alinhar a logo no canto */
     }
     
-    /* Logo posicionada no canto superior esquerdo */
+    /* Logo centralizada e menor */
     .logo { 
-      max-width: 80px; 
+      max-width: 100px; 
       height: auto; 
+      margin: 0 auto 15px auto;
       display: block;
-      margin-bottom: 15px;
     }
 
-    h2 { margin: 0 0 5px 0; font-size: 20px; text-align: left; }
-    p { margin: 0 0 20px 0; color: #666; font-size: 14px; text-align: left; }
+    h2 { margin: 0 0 5px 0; font-size: 20px; }
+    p { margin: 0 0 20px 0; color: #666; font-size: 14px; }
     
     /* Botão em Vermelho */
     .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #e53935; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; box-sizing: border-box; border: none; cursor: pointer; transition: background-color 0.2s; }
@@ -36,11 +35,10 @@
 </head>
 <body>
   <div class="card">
-    <!-- Logo no canto superior esquerdo -->
+    <!-- Logo centralizada acima do nome -->
     <img src="logo_nl.png" alt="Logo NL Transporte Multimodal" class="logo">
 
     <h2>Gian Franco Barbosa</h2>
-    <!-- Texto atualizado no singular -->
     <p>NL Transporte Multimodal</p>
     <button class="btn" id="vbtn">Adicionar aos Contatos</button>
   </div>
