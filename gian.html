@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adicionar Contato - Gian Franco Barbosa</title>
+  <title>Adicionar Contato - Gian</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
     
@@ -35,10 +35,9 @@
 </head>
 <body>
   <div class="card">
-    <!-- Logo centralizada acima do nome -->
     <img src="logo_nl.png" alt="Logo NL Transporte Multimodal" class="logo">
 
-    <h2>Gian Franco Barbosa</h2>
+    <h2>Gian</h2>
     <p>NL Transporte Multimodal</p>
     <button class="btn" id="vbtn">Adicionar aos Contatos</button>
   </div>
@@ -46,29 +45,25 @@
   <script>
     const vcard = `BEGIN:VCARD
 VERSION:3.0
-N:Barbosa;Gian;Franco;;
-FN:Gian Franco Barbosa
+N:;Gian;;;
+FN:Gian
 ORG:NL Transporte Multimodal
-TITLE:Presidente
-TEL;TYPE=CELL:+5591981569301
-EMAIL:gianfb@nlmultimodal.com.br
-ADR:;;Rod. Arthur Bernardes, 5885
+TEL;TYPE=CELL:+5591993536846
+EMAIL;TYPE=WORK:gian@nlmultimodal.com.br
+ADR;TYPE=WORK:;;Rod. Arthur Bernardes, 5885
 URL:nlmultimodal.com.br
 END:VCARD`;
 
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
     async function addContact() {
-      if (isIOS) {
-        window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcard);
-        return;
-      }
-
-      const file = new File([vcard], 'GianBarbosa.vcf', { type: 'text/vcard' });
+      const blob = new Blob([vcard], { type: 'text/vcard' });
+      const file = new File([blob], 'Gian.vcf', { type: 'text/vcard' });
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
-          await navigator.share({ files: [file], title: 'Adicionar Contato' });
+          await navigator.share({
+            files: [file],
+            title: 'Adicionar Contato'
+          });
           return;
         } catch (err) {
           if (err.name === 'AbortError') return;
@@ -76,17 +71,14 @@ END:VCARD`;
       }
 
       const link = document.createElement('a');
-      link.href = URL.createObjectURL(file);
-      link.download = 'GianBarbosa.vcf';
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Gian.vcf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     }
 
     document.getElementById('vbtn').addEventListener('click', addContact);
-
-    // No iPhone, abre sozinho assim que a página carrega
-    if (isIOS) window.onload = addContact;
   </script>
 </body>
 </html>
