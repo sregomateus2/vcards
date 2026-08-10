@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Contato - Aurélio Pinto Jr</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
+    
+    .card { 
+      background: white; 
+      padding: 30px; 
+      border-radius: 16px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+      max-width: 320px; 
+      width: 100%; 
+      box-sizing: border-box; 
+    }
+    
+    /* Logo centralizada e menor */
+    .logo { 
+      max-width: 100px; 
+      height: auto; 
+      margin: 0 auto 15px auto;
+      display: block;
+    }
+
+    h2 { margin: 0 0 5px 0; font-size: 20px; }
+    p { margin: 0 0 20px 0; color: #666; font-size: 14px; }
+    
+    /* Botão em Vermelho */
+    .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #e53935; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; box-sizing: border-box; border: none; cursor: pointer; transition: background-color 0.2s; }
+    .btn:hover { background-color: #c62828; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="logo_nl.png" alt="Logo NL Transporte Multimodal" class="logo">
+
+    <h2>Aurélio Pinto Jr</h2>
+    <p>NL Transporte Multimodal</p>
+    <button class="btn" id="vbtn">Adicionar aos Contatos</button>
+  </div>
+
+  <script>
+    const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:Pinto Jr;Aurélio;;;
+FN:Aurélio Pinto Jr
+ORG:NL Transporte Multimodal
+TITLE:Diretor Comercial
+TEL;TYPE=CELL:+5591993536846
+ADR:;;Rod. Arthur Bernardes, 5885
+URL:nlmultimodal.com.br
+END:VCARD`;
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    async function addContact() {
+      if (isIOS) {
+        window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcard);
+        return;
+      }
+
+      const file = new File([vcard], 'AurelioPintoJr.vcf', { type: 'text/vcard' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: 'Adicionar Contato' });
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') return;
+        }
+      }
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(file);
+      link.download = 'AurelioPintoJr.vcf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    document.getElementById('vbtn').addEventListener('click', addContact);
+
+    // No iPhone, abre sozinho assim que a página carrega
+    if (isIOS) window.onload = addContact;
+  </script>
+</body>
+</html>
