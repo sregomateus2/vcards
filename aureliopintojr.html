@@ -50,23 +50,21 @@ FN:Aurélio Pinto Jr
 ORG:NL Transporte Multimodal
 TITLE:Diretor Comercial
 TEL;TYPE=CELL:+5591993536846
-ADR:;;Rod. Arthur Bernardes, 5885
+EMAIL;TYPE=WORK:aurelio@nlmultimodal.com.br
+ADR;TYPE=WORK:;;Rod. Arthur Bernardes, 5885
 URL:nlmultimodal.com.br
 END:VCARD`;
 
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
     async function addContact() {
-      if (isIOS) {
-        window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcard);
-        return;
-      }
-
-      const file = new File([vcard], 'AurelioPintoJr.vcf', { type: 'text/vcard' });
+      const blob = new Blob([vcard], { type: 'text/vcard' });
+      const file = new File([blob], 'AurelioPintoJr.vcf', { type: 'text/vcard' });
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
-          await navigator.share({ files: [file], title: 'Adicionar Contato' });
+          await navigator.share({
+            files: [file],
+            title: 'Adicionar Contato'
+          });
           return;
         } catch (err) {
           if (err.name === 'AbortError') return;
@@ -74,7 +72,7 @@ END:VCARD`;
       }
 
       const link = document.createElement('a');
-      link.href = URL.createObjectURL(file);
+      link.href = URL.createObjectURL(blob);
       link.download = 'AurelioPintoJr.vcf';
       document.body.appendChild(link);
       link.click();
@@ -82,9 +80,6 @@ END:VCARD`;
     }
 
     document.getElementById('vbtn').addEventListener('click', addContact);
-
-    // No iPhone, abre sozinho assim que a página carrega
-    if (isIOS) window.onload = addContact;
   </script>
 </body>
 </html>
