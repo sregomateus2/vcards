@@ -49,33 +49,52 @@ N:Barbosa;Gian;Franco;;
 FN:Gian Franco Barbosa
 ORG:NL Transporte Multimodal
 TEL;TYPE=CELL:+5591993536846
-EMAIL;TYPE=WORK:gian@nlmultimodal.com.br
+EMAIL;TYPE=WORK:gianfb@nlmultimodal.com.br
 ADR;TYPE=WORK:;;Rod. Arthur Bernardes, 5885
 URL:nlmultimodal.com.br
 END:VCARD`;
 
     async function addContact() {
-      const blob = new Blob([vcard], { type: 'text/vcard' });
-      const file = new File([blob], 'GianFrancoBarbosa.vcf', { type: 'text/vcard' });
+      // Detecta se é dispositivo iOS (iPhone/iPad)
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({
-            files: [file],
-            title: 'Adicionar Contato'
-          });
-          return;
-        } catch (err) {
-          if (err.name === 'AbortError') return;
+      if (isIOS) {
+        // FLUXO IPHONE: Usa Web Share ou gera o arquivo .vcf
+        const blob = new Blob([vcard], { type: 'text/vcard' });
+        const file = new File([blob], 'GianFrancoBarbosa.vcf', { type: 'text/vcard' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'Adicionar Contato'
+            });
+            return;
+          } catch (err) {
+            if (err.name === 'AbortError') return;
+          }
         }
-      }
 
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'GianFrancoBarbosa.vcf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'GianFrancoBarbosa.vcf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+      } else {
+        // FLUXO ANDROID: Abre direto a tela de criar contato sem baixar arquivo local
+        const googleContactsUrl = "https://contacts.google.com/new" +
+          "?given_name=Gian%20Franco" +
+          "&family_name=Barbosa" +
+          "&company=NL%20Transporte%20Multimodal" +
+          "&phone=%2B5591993536846" +
+          "&email=gianfb%40nlmultimodal.com.br" +
+          "&address=Rod.%20Arthur%20Bernardes%2C%205885";
+
+        window.location.href = googleContactsUrl;
+      }
     }
 
     document.getElementById('vbtn').addEventListener('click', addContact);
