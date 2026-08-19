@@ -54,13 +54,16 @@ ADR;TYPE=WORK:;;Rod. Arthur Bernardes, 5885
 URL:nlmultimodal.com.br
 END:VCARD`;
 
+    // Link de Download Direto (DDL) do Google Drive para Android
+    const androidVcfUrl = "https://drive.google.com/uc?export=download&id=1BvKvIeEwzWgjy3BQX_js_oq-qSfmSdoq";
+
     async function addContact() {
       // Detecta se é dispositivo iOS (iPhone/iPad)
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
                     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
       if (isIOS) {
-        // FLUXO IPHONE: Usa Web Share ou gera o arquivo .vcf
+        // FLUXO IPHONE: Usa Web Share ou gera o arquivo .vcf dinâmico
         const blob = new Blob([vcard], { type: 'text/vcard' });
         const file = new File([blob], 'GianFrancoBarbosa.vcf', { type: 'text/vcard' });
 
@@ -84,16 +87,8 @@ END:VCARD`;
         document.body.removeChild(link);
 
       } else {
-        // FLUXO ANDROID: Abre direto a tela de criar contato sem baixar arquivo local
-        const googleContactsUrl = "https://contacts.google.com/new" +
-          "?given_name=Gian%20Franco" +
-          "&family_name=Barbosa" +
-          "&company=NL%20Transporte%20Multimodal" +
-          "&phone=%2B5591993536846" +
-          "&email=gianfb%40nlmultimodal.com.br" +
-          "&address=Rod.%20Arthur%20Bernardes%2C%205885";
-
-        window.location.href = googleContactsUrl;
+        // FLUXO ANDROID: Baixa direto do Google Drive via DDL
+        window.location.href = androidVcfUrl;
       }
     }
 
