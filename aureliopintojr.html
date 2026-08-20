@@ -17,7 +17,6 @@
       box-sizing: border-box; 
     }
     
-    /* Logo centralizada e menor */
     .logo { 
       max-width: 100px; 
       height: auto; 
@@ -28,8 +27,7 @@
     h2 { margin: 0 0 5px 0; font-size: 20px; }
     p { margin: 0 0 20px 0; color: #666; font-size: 14px; }
     
-    /* Botão em Vermelho */
-    .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #e53935; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; box-sizing: border-box; border: none; cursor: pointer; transition: background-color 0.2s; }
+    .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #e53935; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; box-sizing: border-box; border: none; cursor: pointer; text-align: center; }
     .btn:hover { background-color: #c62828; }
   </style>
 </head>
@@ -39,11 +37,11 @@
 
     <h2>Aurélio Pinto Jr</h2>
     <p>NL Transporte Multimodal</p>
-    <button class="btn" id="vbtn">Adicionar aos Contatos</button>
+    <a class="btn" id="vbtn" href="#">Adicionar aos Contatos</a>
   </div>
 
   <script>
-    const vcard = `BEGIN:VCARD
+    const vcardData = `BEGIN:VCARD
 VERSION:3.0
 N:Pinto Jr;Aurélio;;;
 FN:Aurélio Pinto Jr
@@ -55,45 +53,18 @@ ADR;TYPE=WORK:;;Rod. Arthur Bernardes, 5885
 URL:nlmultimodal.com.br
 END:VCARD`;
 
-    // Link de Download Direto (DDL) do Google Drive para Android
-    const androidVcfUrl = "https://drive.google.com/uc?export=download&id=1QZ5rQ0JYPCyokoCvCQG7F4eo-vbPFGcR";
+    const androidUrl = "https://drive.google.com/uc?export=download&id=1QZ5rQ0JYPCyokoCvCQG7F4eo-vbPFGcR";
 
-    async function addContact() {
-      // Detecta se é dispositivo iOS (iPhone/iPad)
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-      if (isIOS) {
-        // FLUXO IPHONE: Usa Web Share ou gera o arquivo .vcf dinâmico
-        const blob = new Blob([vcard], { type: 'text/vcard' });
-        const file = new File([blob], 'AurelioPintoJr.vcf', { type: 'text/vcard' });
+    const btn = document.getElementById('vbtn');
 
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try {
-            await navigator.share({
-              files: [file],
-              title: 'Adicionar Contato'
-            });
-            return;
-          } catch (err) {
-            if (err.name === 'AbortError') return;
-          }
-        }
-
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'AurelioPintoJr.vcf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-      } else {
-        // FLUXO ANDROID: Baixa direto do Google Drive via DDL
-        window.location.href = androidVcfUrl;
-      }
+    if (isIOS) {
+      btn.href = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcardData);
+    } else {
+      btn.href = androidUrl;
     }
-
-    document.getElementById('vbtn').addEventListener('click', addContact);
   </script>
 </body>
 </html>
