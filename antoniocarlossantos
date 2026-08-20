@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Contato - Antonio Santos</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
+    
+    .card { 
+      background: white; 
+      padding: 30px; 
+      border-radius: 16px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+      max-width: 320px; 
+      width: 100%; 
+      box-sizing: border-box; 
+    }
+    
+    /* Logo centralizada e menor */
+    .logo { 
+      max-width: 100px; 
+      height: auto; 
+      margin: 0 auto 15px auto;
+      display: block;
+    }
+
+    h2 { margin: 0 0 5px 0; font-size: 20px; }
+    p { margin: 0 0 20px 0; color: #666; font-size: 14px; }
+    
+    /* Botão em Vermelho */
+    .btn { display: inline-block; width: 100%; padding: 14px 0; background-color: #e53935; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; box-sizing: border-box; border: none; cursor: pointer; transition: background-color 0.2s; }
+    .btn:hover { background-color: #c62828; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="logo_nl.png" alt="Logo NL Transporte Multimodal" class="logo">
+
+    <h2>Antonio Santos</h2>
+    <p>Antec Inteligencia</p>
+    <button class="btn" id="vbtn">Adicionar aos Contatos</button>
+  </div>
+
+  <script>
+    const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:Santos;Antonio;Carlos Moraes dos;;
+FN:Antonio Santos
+ORG:Antec Inteligencia
+TEL;TYPE=CELL:+5591992019644
+ADR;TYPE=WORK:;;Rod. Arthur Bernardes, 5885
+END:VCARD`;
+
+    // Link de Download Direto (DDL) do Google Drive para Android
+    const androidVcfUrl = "https://drive.google.com/uc?export=download&id=1UzC2YI-Irnb4k4Hasv2brL69_5pOPdx8";
+
+    async function addContact() {
+      // Detecta se é dispositivo iOS (iPhone/iPad)
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+      if (isIOS) {
+        // FLUXO IPHONE: Usa Web Share ou gera o arquivo .vcf dinâmico
+        const blob = new Blob([vcard], { type: 'text/vcard' });
+        const file = new File([blob], 'AntonioSantos.vcf', { type: 'text/vcard' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'Adicionar Contato'
+            });
+            return;
+          } catch (err) {
+            if (err.name === 'AbortError') return;
+          }
+        }
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'AntonioSantos.vcf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+      } else {
+        // FLUXO ANDROID: Baixa direto do Google Drive via DDL
+        window.location.href = androidVcfUrl;
+      }
+    }
+
+    document.getElementById('vbtn').addEventListener('click', addContact);
+  </script>
+</body>
+</html>
